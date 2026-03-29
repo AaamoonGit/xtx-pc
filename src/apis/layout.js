@@ -5,3 +5,9 @@ export const getHeaderNavRequest = () => {
     url: '/home/category/head'
   })
 }
+
+export const getBannerRequest = () => {
+  return request({
+    url: '/home/banner'
+  })
+}

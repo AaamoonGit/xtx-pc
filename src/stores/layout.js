@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getHeaderNavRequest } from '@/apis/layout'
+import { getHeaderNavRequest, getBannerRequest } from '@/apis/layout'
 import { ref } from 'vue'
 
 export const useLayoutStore = defineStore('layout', () => {
@@ -10,5 +10,13 @@ export const useLayoutStore = defineStore('layout', () => {
     NavList.value = res.result
   }
 
-  return { NavList, getHeaderNav }
+  // 轮播图
+  const bannerList = ref([])
+  const getBanner = async () => {
+    const res = await getBannerRequest()
+    console.log(res.result)
+    bannerList.value = res.result
+  }
+
+  return { NavList, getHeaderNav, bannerList, getBanner }
 })
