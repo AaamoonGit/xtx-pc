@@ -1,8 +1,13 @@
 <script setup>
-const obj = {
-  a: 1
+import { getIndexRequest } from './apis/test'
+/**
+ * 请求测试
+ */
+const getIndex = async () => {
+  const res = await getIndexRequest()
+  console.log(res)
 }
-console.log(obj)
+getIndex()
 </script>
 <template>
   <div>123</div>
