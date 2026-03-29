@@ -1,14 +1,13 @@
 <script setup>
-import { getHeaderNavRequest } from '@/apis/layout'
-import { ref } from 'vue'
-const NavList = ref([])
-const getgetHeaderNav = async () => {
-  const res = await getHeaderNavRequest()
-  console.log(res.result)
-  NavList.value = res.result
-}
+import { onMounted } from 'vue'
+import { useLayoutStore } from '@/stores/layout'
+const LayoutStore = useLayoutStore()
 
-getgetHeaderNav()
+// console.log(LayoutStore.getHeaderNav);
+
+onMounted(() => {
+  LayoutStore.getHeaderNav()
+})
 </script>
 
 <template>
@@ -21,11 +20,11 @@ getgetHeaderNav()
         <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
-        <li v-for="item in NavList" :key="item.id">
+        <li v-for="item in LayoutStore.NavList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
-      <div class="search">
+      <div useLayoutStoreclass="search">
         <i class="iconfont icon-search"></i>
         <input type="text" placeholder="搜一搜" />
       </div>

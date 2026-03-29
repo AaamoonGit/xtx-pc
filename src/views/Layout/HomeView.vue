@@ -3,4 +3,10 @@ defineOptions({
   name: 'HomePage'
 })
 </script>
-<template>HomePage</template>
+<template>
+  <div>
+    HomePage
+    <p style="height: 1200px"></p>
+  </div>
+</template>
+<style scoped lang="scss"></style>
