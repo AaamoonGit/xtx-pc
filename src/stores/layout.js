@@ -14,7 +14,7 @@ export const useLayoutStore = defineStore('layout', () => {
   const bannerList = ref([])
   const getBanner = async () => {
     const res = await getBannerRequest()
-    console.log(res.result)
+    // console.log(res.result)
     bannerList.value = res.result
   }
 

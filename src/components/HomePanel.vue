@@ -8,26 +8,14 @@
       <div class="head">
         <!-- 主标题和副标题 -->
         <h3>
-          <slot name="title">新鲜好物</slot>
+          <slot name="title"></slot>
           <small>
-            <slot name="subTitle">新鲜出炉 品质靠谱</slot>
+            <slot name="subTitle"></slot>
           </small>
         </h3>
       </div>
       <!-- 主体内容区域 -->
-      <slot name="content">
-        <!-- <div class="container">
-          <div class="item">
-            <div class="img">
-              <img src="https://picsum.photos/200/300" alt="">
-            </div>
-            <div class="info">
-              <div class="title">title</div>
-              <div class="price">price</div>
-            </div>
-          </div>
-        </div> -->
-      </slot>
+      <slot name="content"> </slot>
     </div>
   </div>
 </template>

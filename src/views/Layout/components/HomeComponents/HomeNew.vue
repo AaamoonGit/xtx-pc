@@ -8,7 +8,7 @@ import { onMounted, ref } from 'vue'
 const NewList = ref([])
 const findNew = async () => {
   const res = await findNewRequest()
-  console.log(res)
+  // console.log(res)
   NewList.value = res.result
 }
 onMounted(() => {
@@ -18,6 +18,8 @@ onMounted(() => {
 
 <template>
   <HomePanel>
+    <template #title>新鲜好物</template>
+    <template #subTitle>新鲜出炉 品质靠谱</template>
     <template #content>
       <ul class="goods-list">
         <li v-for="item in NewList" :key="item.id">

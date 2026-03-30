@@ -2,6 +2,7 @@
 import HomePanel from '@/components/HomePanel.vue'
 import { getHotRequest } from '@/apis/layout'
 import { onMounted, ref } from 'vue'
+import GoodsItem from '@/components/goodsItem.vue'
 
 const hotList = ref([])
 const getHot = async () => {
@@ -21,11 +22,7 @@ onMounted(() => {
     <template #content>
       <ul class="goods-list">
         <li v-for="item in hotList" :key="item.id">
-          <RouterLink to="/">
-            <img :src="item.picture" alt="" />
-            <p class="name">{{ item.title }}</p>
-            <p class="desc">{{ item.alt }}</p>
-          </RouterLink>
+          <GoodsItem :goods="item" :size="2"></GoodsItem>
         </li>
       </ul>
     </template>

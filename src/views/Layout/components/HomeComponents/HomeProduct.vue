@@ -1,30 +1,43 @@
 <script setup>
 // import HomePanel from './HomePanel.vue'
+import HomePanel from '@/components/HomePanel.vue'
+import { ref, onMounted } from 'vue'
+import { getGoodsRequest } from '@/apis/layout'
+import GoodsItem from '@/components/goodsItem.vue'
+
+const cate = ref([])
+
+const getGoods = async () => {
+  const res = await getGoodsRequest()
+  // console.log(res);
+  cate.value = res.result
+}
+onMounted(() => {
+  getGoods()
+})
 </script>
 
 <template>
   <div class="home-product">
-    <!-- <HomePanel :title="cate.name" v-for="cate in goodsProduct" :key="cate.id">
-      <div class="box">
-        <RouterLink class="cover" to="/">
-          <img :src="cate.picture" />
-          <strong class="label">
-            <span>{{ cate.name }}馆</span>
-            <span>{{ cate.saleInfo }}</span>
-          </strong>
-        </RouterLink>
-        <ul class="goods-list">
-          <li v-for="good in cate.goods" :key="good.id">
-            <RouterLink to="/" class="goods-item">
-              <img :src="good.picture" alt="" />
-              <p class="name ellipsis">{{ good.name }}</p>
-              <p class="desc ellipsis">{{ good.desc }}</p>
-              <p class="price">&yen;{{ good.price }}</p>
-            </RouterLink>
-          </li>
-        </ul>
-      </div>
-    </HomePanel> -->
+    <HomePanel v-for="item in cate" :key="item.id">
+      <template #title>{{ item.name }}</template>
+      <template #content>
+        <div class="box">
+          <RouterLink class="cover" to="/">
+            <img v-lazy-img="item.picture" />
+            <strong class="label">
+              <span>{{ item.name }}馆</span>
+              <span>{{ item.saleInfo }}</span>
+            </strong>
+          </RouterLink>
+          <ul class="goods-list">
+            <li v-for="good in item.goods" :key="good.id">
+              <GoodsItem :goods="good"></GoodsItem>
+            </li>
+          </ul>
+        </div>
+      </template>
+    </HomePanel>
   </div>
 </template>
 
