@@ -7,7 +7,7 @@ import GoodsItem from '@/components/goodsItem.vue'
 const hotList = ref([])
 const getHot = async () => {
   const res = await getHotRequest()
-  console.log(res)
+  // console.log(res)
   hotList.value = res.result
 }
 

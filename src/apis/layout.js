@@ -6,9 +6,12 @@ export const getHeaderNavRequest = () => {
   })
 }
 
-export const getBannerRequest = () => {
+export const getBannerRequest = (id = '1') => {
   return request({
-    url: '/home/banner'
+    url: `/home/banner`,
+    params: {
+      distributionSite: id
+    }
   })
 }
 

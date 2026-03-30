@@ -23,7 +23,7 @@ onMounted(() => {
     <template #content>
       <ul class="goods-list">
         <li v-for="item in NewList" :key="item.id">
-          <RouterLink :to="`/detail/${item.id}`">
+          <RouterLink to="/">
             <img :src="item.picture" alt="" />
             <p class="name">{{ item.name }}</p>
             <p class="price">&yen;{{ item.price }}</p>
