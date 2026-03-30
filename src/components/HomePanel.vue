@@ -15,9 +15,19 @@
         </h3>
       </div>
       <!-- 主体内容区域 -->
-      <div>
-        <!-- <goods-item></goods-item> -->
-      </div>
+      <slot name="content">
+        <!-- <div class="container">
+          <div class="item">
+            <div class="img">
+              <img src="https://picsum.photos/200/300" alt="">
+            </div>
+            <div class="info">
+              <div class="title">title</div>
+              <div class="price">price</div>
+            </div>
+          </div>
+        </div> -->
+      </slot>
     </div>
   </div>
 </template>
