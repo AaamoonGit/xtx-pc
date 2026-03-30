@@ -21,7 +21,9 @@ onMounted(() => {
           <RouterLink to="/">首页</RouterLink>
         </li>
         <li v-for="item in LayoutStore.NavList" :key="item.id">
-          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
+          <RouterLink active-class="active" :to="`/category/${item.id}`">{{
+            item.name
+          }}</RouterLink>
         </li>
       </ul>
       <div useLayoutStoreclass="search">

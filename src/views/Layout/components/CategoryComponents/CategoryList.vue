@@ -2,14 +2,12 @@
 import { getCategoryBreadNavRequest } from '@/apis/category'
 import { onMounted, watchEffect, ref } from 'vue'
 import { useRoute } from 'vue-router'
-
 const route = useRoute()
-// console.log(route.params.id)
-const breadName = ref('')
+const categoryData = ref([])
 const getBreadNav = async () => {
   const res = await getCategoryBreadNavRequest(route.params.id)
   // console.log(res)
-  breadName.value = res.result.name
+  categoryData.value = res.result
 }
 onMounted(() => {
   getBreadNav()
@@ -19,21 +17,35 @@ watchEffect(() => {
   getBreadNav()
 })
 </script>
-
 <template>
   <div class="top-category">
     <div class="container m-top-20">
-      <!-- 面包屑 -->
-      <div class="bread-container">
-        <el-breadcrumb separator=">">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>{{ breadName }}</el-breadcrumb-item>
-        </el-breadcrumb>
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <div
+        class="ref-goods"
+        v-for="item in categoryData.children"
+        :key="item.id"
+      >
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+        </div>
       </div>
     </div>
   </div>
 </template>
-
 <style scoped lang="scss">
 .top-category {
   h3 {
@@ -105,10 +117,6 @@ watchEffect(() => {
       justify-content: space-around;
       padding: 0 40px 30px;
     }
-  }
-
-  .bread-container {
-    padding: 25px 0;
   }
 }
 </style>
