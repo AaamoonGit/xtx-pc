@@ -1,13 +1,13 @@
 <script setup>
 import { getCategoryBreadNavRequest } from '@/apis/category'
-import { onMounted, watchEffect, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 
 const route = useRoute()
 // console.log(route.params.id)
 const breadName = ref('')
-const getBreadNav = async () => {
-  const res = await getCategoryBreadNavRequest(route.params.id)
+const getBreadNav = async (id) => {
+  const res = await getCategoryBreadNavRequest(id || route.params.id)
   // console.log(res)
   breadName.value = res.result.name
 }
@@ -15,9 +15,15 @@ onMounted(() => {
   getBreadNav()
 })
 
-watchEffect(() => {
-  getBreadNav()
+onBeforeRouteUpdate((to) => {
+  console.log(123)
+  console.log(to)
+
+  getBreadNav(to.params.id)
 })
+// watchEffect(() => {
+//   getBreadNav()
+// })
 </script>
 
 <template>
