@@ -10,12 +10,14 @@ defineOptions({
 })
 </script>
 <template>
-  <div class="container">
-    <HomeCategory></HomeCategory>
-    <HomeBanner></HomeBanner>
+  <div class="home-page">
+    <div class="container">
+      <HomeCategory></HomeCategory>
+      <HomeBanner></HomeBanner>
+    </div>
+    <HomeNew></HomeNew>
+    <HomeHot></HomeHot>
+    <HomeProduct></HomeProduct>
   </div>
-  <HomeNew></HomeNew>
-  <HomeHot></HomeHot>
-  <HomeProduct></HomeProduct>
 </template>
 <style scoped lang="scss"></style>

@@ -11,6 +11,11 @@ defineOptions({
   <LayoutFooterFixed></LayoutFooterFixed>
   <LayoutNav></LayoutNav>
   <LayoutHeader></LayoutHeader>
-  <router-view></router-view>
+  <router-view v-slot="{ Component, route }">
+    <transition name="slide-up" appear>
+      <component :is="Component" :key="route.fullPath" />
+    </transition>
+  </router-view>
   <LayoutFooter></LayoutFooter>
 </template>
+<style scoped lang="scss"></style>

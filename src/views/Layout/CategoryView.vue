@@ -7,7 +7,9 @@ defineOptions({
 })
 </script>
 <template>
-  <breadCrumb></breadCrumb>
-  <CategoryBanner></CategoryBanner>
-  <CategoryList></CategoryList>
+  <div class="category-page">
+    <breadCrumb></breadCrumb>
+    <CategoryBanner></CategoryBanner>
+    <CategoryList></CategoryList>
+  </div>
 </template>

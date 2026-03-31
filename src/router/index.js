@@ -3,11 +3,16 @@ import LayoutPage from '@/views/Layout/Layout.vue'
 import HomeView from '@/views/Layout/HomeView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    // 始终滚动到顶部
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
       // redirect:'/home',
       component: LayoutPage,
+
       children: [
         {
           // 置空设置默认二级路由

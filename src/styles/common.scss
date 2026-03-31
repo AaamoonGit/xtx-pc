@@ -102,3 +102,64 @@ ul {
 .el-breadcrumb__inner.is-link {
   font-weight: 400 !important;
 }
+
+scss
+// ... existing code ...
+
+// reset element
+.el-breadcrumb__inner.is-link {
+  font-weight: 400 !important;
+}
+
+// ==================== 全局路由过渡动画 ====================
+// 页面淡入淡出动画 - 全局生效
+.page-fade-enter-active,
+.page-fade-leave-active,
+.page-fade-appear-active {
+  transition: opacity 0.3s ease;
+}
+
+.page-fade-enter-from,
+.page-fade-leave-to,
+.page-fade-appear-from {
+  opacity: 0;
+}
+
+// 可选：添加首次加载延迟
+.page-fade-appear-active {
+  transition-delay: 0.1s;
+}
+
+// ==================== 其他常用过渡动画（可选） ====================
+
+// 滑动效果
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-up-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+// 缩放效果
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: all 0.3s ease;
+}
+
+.zoom-enter-from {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.zoom-leave-to {
+  opacity: 0;
+  transform: scale(1.05);
+}
