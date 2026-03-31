@@ -1,26 +1,7 @@
 <script setup>
-import { getCategoryBreadNavRequest } from '@/apis/category'
-import { onMounted, ref } from 'vue'
-import { useRoute, onBeforeRouteUpdate } from 'vue-router'
+import { useCategory } from './composables/useCategory'
 
-const route = useRoute()
-// console.log(route.params.id)
-const breadName = ref('')
-const getBreadNav = async (id) => {
-  const res = await getCategoryBreadNavRequest(id || route.params.id)
-  // console.log(res)
-  breadName.value = res.result.name
-}
-onMounted(() => {
-  getBreadNav()
-})
-
-onBeforeRouteUpdate((to) => {
-  console.log(123)
-  console.log(to)
-
-  getBreadNav(to.params.id)
-})
+const { breadName } = useCategory()
 // watchEffect(() => {
 //   getBreadNav()
 // })

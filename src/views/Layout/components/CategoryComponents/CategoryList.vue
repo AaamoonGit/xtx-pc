@@ -1,21 +1,7 @@
 <script setup>
-import { getCategoryBreadNavRequest } from '@/apis/category'
-import { onMounted, watchEffect, ref } from 'vue'
-import { useRoute } from 'vue-router'
-const route = useRoute()
-const categoryData = ref([])
-const getBreadNav = async () => {
-  const res = await getCategoryBreadNavRequest(route.params.id)
-  // console.log(res)
-  categoryData.value = res.result
-}
-onMounted(() => {
-  getBreadNav()
-})
+import { useCategory } from './composables/useCategory'
 
-watchEffect(() => {
-  getBreadNav()
-})
+const { categoryData } = useCategory()
 </script>
 <template>
   <div class="top-category">

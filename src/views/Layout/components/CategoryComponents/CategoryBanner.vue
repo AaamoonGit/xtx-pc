@@ -1,17 +1,7 @@
 <script setup>
-// 部分代码省略
-import { getBannerRequest } from '@/apis/layout'
-import { ref, onMounted } from 'vue'
-// 获取banner
-const bannerList = ref([])
+import { useBanner } from './composables/usebanner'
 
-const getBanner = async () => {
-  const res = await getBannerRequest('2')
-  // console.log(res)
-  bannerList.value = res.result
-}
-
-onMounted(() => getBanner())
+const { bannerList } = useBanner()
 </script>
 
 <template>
