@@ -35,6 +35,30 @@ const getGoodsList = async () => {
 onMounted(() => {
   getGoodsList()
 })
+
+const activeName = ref('first')
+
+const handleTabChange = () => {
+  console.log(activeName.value)
+  reqDate.value.page = 1
+  reqDate.value.sortField = activeName.value
+  getGoodsList()
+}
+const isDisabled = ref(false)
+
+const load = async () => {
+  console.log('+')
+
+  reqDate.value.page++
+
+  const res = await getSubCategoryRequest(reqDate.value)
+  console.log(res)
+  goodsList.value = [...goodsList.value, ...res.result.items]
+  const totalPages = res.result.pages
+  if (reqDate.value.page === totalPages) {
+    isDisabled.value = true
+  }
+}
 </script>
 
 <template>
@@ -50,12 +74,18 @@ onMounted(() => {
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="activeName" @click="handleTabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div
+        class="body"
+        v-infinite-scroll="load"
+        infinite-scroll-delay="1000"
+        infinite-scroll-distance="0"
+        :infinite-scroll-disabled="isDisabled"
+      >
         <!-- 商品列表-->
         <goodsItem
           v-for="item in goodsList"
