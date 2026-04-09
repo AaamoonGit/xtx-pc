@@ -7,9 +7,10 @@ const props = defineProps({
 })
 // console.log(props.type);
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { fetchHotGoodsRequest } from '@/apis/detail'
 import { useRoute } from 'vue-router'
+
 const route = useRoute()
 const id = route.params.id
 const goods = ref([])
@@ -22,11 +23,14 @@ const getHotGoods = async () => {
 onMounted(() => {
   getHotGoods()
 })
+
+const TYPEMAP = { 1: '24小时热销榜', 2: '周热销榜' }
+const title = computed(() => TYPEMAP[props.type])
 </script>
 
 <template>
   <div class="goods-hot">
-    <h3>{{ type === 1 ? '24小时热销榜' : '周热销榜' }}</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink to="/" class="goods-item" v-for="item in goods" :key="item.id">
       <img :src="item.picture" alt="" />
