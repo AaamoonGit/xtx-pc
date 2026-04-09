@@ -47,3 +47,17 @@ export const getGoodsRequest = () => {
     url: '/home/goods'
   })
 }
+
+/**
+ * @description: 获取商品详情
+ * @param {*}
+ * @return {*}
+ */
+export const getDetailRequest = (id) => {
+  return request({
+    url: '/goods',
+    params: {
+      id
+    }
+  })
+}

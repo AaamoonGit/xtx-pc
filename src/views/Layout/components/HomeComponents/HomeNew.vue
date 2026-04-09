@@ -4,12 +4,15 @@ import HomePanel from '@/components/HomePanel.vue'
 import { findNewRequest } from '@/apis/layout'
 
 import { onMounted, ref } from 'vue'
+import GoodsItem from '@/components/goodsItem.vue'
 
 const NewList = ref([])
 const findNew = async () => {
   const res = await findNewRequest()
   // console.log(res)
   NewList.value = res.result
+  NewList.value.forEach((item) => (item.desc = ''))
+  // console.log(NewList.value);
 }
 onMounted(() => {
   findNew()
@@ -23,11 +26,7 @@ onMounted(() => {
     <template #content>
       <ul class="goods-list">
         <li v-for="item in NewList" :key="item.id">
-          <RouterLink to="/">
-            <img :src="item.picture" alt="" />
-            <p class="name">{{ item.name }}</p>
-            <p class="price">&yen;{{ item.price }}</p>
-          </RouterLink>
+          <GoodsItem :goods="item" :size="2"></GoodsItem>
         </li>
       </ul>
     </template>

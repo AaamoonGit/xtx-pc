@@ -12,10 +12,16 @@ defineProps({
 </script>
 
 <template>
-  <RouterLink to="/" class="goods-item" :class="{ 'goods-item2': size === 2 }">
+  <RouterLink
+    :to="`/category/detail/${goods.id}`"
+    class="goods-item"
+    :class="{ 'goods-item2': size === 2 }"
+  >
     <img v-lazy-img="goods.picture" alt="" />
-    <p class="name ellipsis">{{ goods.name }}{{ goods.title }}</p>
-    <p class="desc ellipsis">{{ goods.desc }}{{ goods.alt }}</p>
+    <p class="name ellipsis">{{ goods.name || goods.title }}</p>
+    <p v-if="goods.desc || goods.alt" class="desc ellipsis">
+      {{ goods.desc || goods.alt }}
+    </p>
     <p v-if="goods.price" class="price">&yen;{{ goods.price }}</p>
   </RouterLink>
 </template>
@@ -82,6 +88,9 @@ defineProps({
     font-size: 18px;
     padding-top: 12px;
     height: 45px;
+  }
+  .price {
+    padding-top: 12px;
   }
 }
 </style>
