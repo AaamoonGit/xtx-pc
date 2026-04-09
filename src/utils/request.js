@@ -27,10 +27,12 @@ request.interceptors.response.use(
     // 对响应数据做点什么
     return response.data
   },
-  function (error) {
+  function (e) {
+    // console.log(e.response.data.message);
+    ElMessage({ type: 'error', message: e.response.data.message })
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
-    return Promise.reject(error)
+    return Promise.reject(e)
   }
 )
 

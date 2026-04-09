@@ -18,6 +18,7 @@ export default defineConfig({
       resolvers: [
         ElementPlusResolver({
           importStyle: 'sass'
+          // useSource: true
         })
       ]
     })
