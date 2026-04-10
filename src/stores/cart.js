@@ -23,7 +23,14 @@ export const useCartStore = defineStore(
       }
     }
 
-    return { cartInfo, addCart }
+    /**
+     * 删除购物车商品
+     * @param {*} skuId
+     */
+    const delCart = (skuId) => {
+      cartInfo.value = cartInfo.value.filter((item) => item.skuId !== skuId)
+    }
+    return { cartInfo, addCart, delCart }
   },
   { persist: true }
 )

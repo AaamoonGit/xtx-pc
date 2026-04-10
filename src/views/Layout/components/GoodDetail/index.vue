@@ -25,7 +25,7 @@ onMounted(() => {
 
 const skuChange = (sku) => {
   // goodDetail.value.sku = sku
-  console.log(sku)
+  // console.log(sku)
   skuObj.value = sku
 }
 

@@ -25,7 +25,10 @@ const cartStore = useCartStore()
               <p class="count">x{{ item.count }}</p>
             </div>
           </RouterLink>
-          <i class="iconfont icon-close-new"></i>
+          <i
+            class="iconfont icon-a-icon_close_bottomcard1"
+            @click="cartStore.delCart(item.skuId)"
+          ></i>
         </div>
       </div>
       <div class="foot">
