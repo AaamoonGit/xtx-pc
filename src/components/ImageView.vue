@@ -40,6 +40,7 @@ const middleChange = () => {
 
   // console.log(elementX.value, elementY.value, isOutside.value)
 
+  if (!layer.value) return
   // 滑块移动
   layerleft.value = elementX.value - layer.value.offsetWidth / 2
   layerTop.value = elementY.value - layer.value.offsetHeight / 2

@@ -7,10 +7,14 @@ const request = axios.create({
   timeout: 5000
 })
 
+import { useUserStore } from '@/stores/user'
 // 实例添加拦截器
 // 添加请求拦截器
 request.interceptors.request.use(
   function (config) {
+    const userStore = useUserStore()
+    const token = userStore.userInfo.token
+    config.headers.Authorization = `Bearer ${token}`
     // 在发送请求之前做些什么
     return config
   },
@@ -19,7 +23,7 @@ request.interceptors.request.use(
     return Promise.reject(error)
   }
 )
-
+import router from '@/router/index'
 // 添加响应拦截器
 request.interceptors.response.use(
   function (response) {
@@ -31,6 +35,14 @@ request.interceptors.response.use(
     // console.log(e.response.data.message);
     ElMessage({ type: 'error', message: e.response.data.message })
     // 超出 2xx 范围的状态码都会触发该函数。
+    console.log(e.response.status)
+    if (e.response.status === 401) {
+      console.log('token失效了')
+      const userStore = useUserStore()
+      userStore.clearUserInfo()
+      router.push('/login')
+    }
+
     // 对响应错误做点什么
     return Promise.reject(e)
   }

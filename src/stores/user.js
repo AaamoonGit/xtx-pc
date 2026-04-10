@@ -9,12 +9,16 @@ export const useUserStore = defineStore(
 
     const getUserInfo = async (data) => {
       const res = await loginRequest(data)
-      console.log(res)
+      // console.log(res)
       // const {token} = res.result
       userInfo.value = res.result
     }
 
-    return { userInfo, getUserInfo }
+    const clearUserInfo = () => {
+      userInfo.value = {}
+    }
+
+    return { userInfo, getUserInfo, clearUserInfo }
   },
   {
     persist: true

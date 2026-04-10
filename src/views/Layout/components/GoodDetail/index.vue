@@ -93,7 +93,7 @@ const skuChange = (sku) => {
                 </li>
                 <li>
                   <p>品牌信息</p>
-                  <p>{{ goodDetail.brand.name }}</p>
+                  <p>{{ goodDetail.brand?.name || '未知' }}</p>
                   <p><i class="iconfont icon-dynamic-filling"></i>品牌主页</p>
                 </li>
               </ul>

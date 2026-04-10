@@ -6,9 +6,9 @@ import { ref } from 'vue'
 
 // 表单数据
 const form = ref({
-  account: '',
-  password: '',
-  argCheck: false
+  account: 'xiaotuxian001',
+  password: '123456',
+  argCheck: true
 })
 
 // 校验规则
