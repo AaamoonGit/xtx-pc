@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useLayoutStore } from '@/stores/layout'
+import HeaderCart from './HeaderCart.vue'
 const LayoutStore = useLayoutStore()
 
 // console.log(LayoutStore.getHeaderNav);
@@ -31,6 +32,7 @@ onMounted(() => {
         <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 头部购物车 -->
+      <HeaderCart></HeaderCart>
     </div>
   </header>
 </template>
