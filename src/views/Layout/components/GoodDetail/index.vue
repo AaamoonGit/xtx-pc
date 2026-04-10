@@ -3,10 +3,15 @@ import { getDetailRequest } from '@/apis/layout.js'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
+import { useCartStore } from '@/stores/cart'
+import { ElMessage } from 'element-plus'
+const cartStore = useCartStore()
 
 const goodDetail = ref(null)
 const route = useRoute()
 const loading = ref(true)
+const goodNum = ref(1)
+const skuObj = ref({})
 const getDeatil = async () => {
   const res = await getDetailRequest(route.params.id)
   console.log(res)
@@ -21,7 +26,28 @@ onMounted(() => {
 const skuChange = (sku) => {
   // goodDetail.value.sku = sku
   console.log(sku)
+  skuObj.value = sku
 }
+
+const addCart = () => {
+  if (skuObj.value.skuId) {
+    cartStore.addCart({
+      id: goodDetail.value.id,
+      name: goodDetail.value.name,
+      picture: goodDetail.value.mainPictures[0],
+      price: goodDetail.value.price,
+      count: goodNum.value,
+      skuId: skuObj.value.skuId,
+      attrsText: skuObj.value.specsText,
+      selected: true
+    })
+    ElMessage.success('添加购物车成功')
+  } else {
+    ElMessage.warning('规格不完整')
+  }
+}
+
+const handleNumChange = () => {}
 </script>
 
 <template>
@@ -124,10 +150,24 @@ const skuChange = (sku) => {
               <!-- sku组件 -->
               <XtxSku :goods="goodDetail" @change="skuChange"></XtxSku>
               <!-- 数据组件 -->
-
+              <div>
+                数量：
+                <el-input-number
+                  v-model="goodNum"
+                  :min="1"
+                  @change="handleNumChange"
+                />
+              </div>
               <!-- 按钮组件 -->
               <div>
-                <el-button size="large" class="btn"> 加入购物车 </el-button>
+                <el-button
+                  size="large"
+                  class="btn"
+                  type="success"
+                  @click="addCart"
+                >
+                  加入购物车
+                </el-button>
               </div>
             </div>
           </div>
