@@ -12,7 +12,10 @@ const cartStore = useCartStore()
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <el-checkbox
+                  :modelValue="cartStore.isAllChecked"
+                  @change="cartStore.CheckedAll"
+                />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -26,7 +29,12 @@ const cartStore = useCartStore()
             <!-- 购物车不为空 -->
             <tr v-for="i in cartStore.cartInfo" :key="i.id">
               <td>
-                <el-checkbox />
+                <el-checkbox
+                  :model-value="i.selected"
+                  @change="
+                    (selected) => cartStore.CheckedChange(i.skuId, selected)
+                  "
+                />
               </td>
               <td>
                 <div class="goods">
@@ -82,8 +90,9 @@ const cartStore = useCartStore()
       <!-- 操作栏 -->
       <div class="action">
         <div class="batch">
-          共 {{ cartStore.getTotalCart }} 件商品，已选择 2 件，商品合计：
-          <span class="red">¥ {{ cartStore.getTotalPrice.toFixed(2) }} </span>
+          共 {{ cartStore.getTotalCart }} 件商品，已选择
+          {{ cartStore.checkedCount }} 件，商品合计：
+          <span class="red">¥ {{ cartStore.checkedPrice.toFixed(2) }} </span>
         </div>
         <div class="total">
           <el-button size="large" type="primary">下单结算</el-button>

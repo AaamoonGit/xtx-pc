@@ -1,3 +1,4 @@
+import { all } from 'axios'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
@@ -47,7 +48,61 @@ export const useCartStore = defineStore(
       }, 0)
     })
 
-    return { cartInfo, addCart, delCart, getTotalCart, getTotalPrice }
+    const allChecked = ref(false)
+    /**
+     * 是否选中-单个商品
+     * @param {*} skuId
+     */
+    const CheckedChange = (skuId, selected) => {
+      const target = cartInfo.value.find((item) => item.skuId === skuId)
+      console.log(target.skuId, selected)
+      target.selected = selected
+    }
+
+    /**
+     * 单选控制全选
+     */
+    const isAllChecked = computed(() =>
+      cartInfo.value.every((item) => item.selected === true)
+    )
+
+    /**
+     * 全选控制单选
+     */
+    const CheckedAll = (value) => {
+      allChecked.value = !allChecked.value
+      cartInfo.value.forEach((item) => (item.selected = allChecked.value))
+    }
+
+    /**
+     * 选中的数量
+     */
+    const checkedCount = computed(() => {
+      return cartInfo.value.filter((item) => item.selected).length
+    })
+
+    /**
+     * 选中的商品总价
+     */
+    const checkedPrice = computed(() => {
+      return cartInfo.value
+        .filter((item) => item.selected)
+        .reduce((pre, item) => pre + item.price * item.count, 0)
+    })
+
+    return {
+      cartInfo,
+      addCart,
+      delCart,
+      getTotalCart,
+      getTotalPrice,
+      CheckedChange,
+      CheckedAll,
+      allChecked,
+      checkedCount,
+      checkedPrice,
+      isAllChecked
+    }
   },
   { persist: true }
 )
