@@ -1,6 +1,37 @@
 <script setup>
 defineOptions({ name: 'PayPage' })
-const payInfo = {}
+
+import { getOrderDetailRequest } from '@/apis/pay'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+const payInfo = ref({})
+const getOrderDetail = async () => {
+  const res = await getOrderDetailRequest(route.params.orderId)
+  console.log(res)
+  payInfo.value = res.result
+}
+
+onMounted(() => {
+  getOrderDetail()
+})
+
+// 支付地址
+const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
+const backURL = 'http://127.0.0.1:5173/payresult'
+const redirectUrl = encodeURIComponent(backURL)
+const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const backUrl = () => {
+  console.log(payUrl)
+
+  setTimeout(() => {
+    router.push(`/payresult?payResult=${false}&orderId=${payInfo.value.id}`)
+  }, 2000)
+}
 </script>
 
 <template>
@@ -24,7 +55,7 @@ const payInfo = {}
         <div class="item">
           <p>支付平台</p>
           <a class="btn wx" href="javascript:;"></a>
-          <a class="btn alipay" :href="payUrl"></a>
+          <a class="btn alipay" @click="backUrl"></a>
         </div>
         <div class="item">
           <p>支付方式</p>
