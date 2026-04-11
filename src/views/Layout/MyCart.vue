@@ -2,6 +2,13 @@
 import { useCartStore } from '@/stores/cart'
 
 const cartStore = useCartStore()
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const goCheckOut = () => {
+  console.log(cartStore.cartInfo)
+  router.push('/checkout')
+}
 </script>
 
 <template>
@@ -95,7 +102,9 @@ const cartStore = useCartStore()
           <span class="red">¥ {{ cartStore.checkedPrice.toFixed(2) }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary">下单结算</el-button>
+          <el-button size="large" type="primary" @click="goCheckOut"
+            >下单结算</el-button
+          >
         </div>
       </div>
     </div>
