@@ -1,16 +1,16 @@
 <script setup>
 import { getDetailRequest } from '@/apis/layout.js'
 import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
 import { useCartStore } from '@/stores/cart'
 import { ElMessage } from 'element-plus'
-import { checkLogin } from '@/utils/auth.js'
+// import { checkLogin } from '@/utils/auth.js'
 const cartStore = useCartStore()
 
 const goodDetail = ref(null)
 const route = useRoute()
-const router = useRouter()
+// const router = useRouter()
 const loading = ref(true)
 const goodNum = ref(1)
 const skuObj = ref({})
@@ -31,13 +31,13 @@ const skuChange = (sku) => {
 }
 
 const addCart = () => {
-  if (!checkLogin()) {
-    router.push({
-      path: '/login',
-      query: { redirect: route.fullPath }
-    })
-    return
-  }
+  // if (!checkLogin()) {
+  //   router.push({
+  //     path: '/login',
+  //     query: { redirect: route.fullPath }
+  //   })
+  //   return
+  // }
   if (skuObj.value.skuId) {
     cartStore.addCart({
       id: goodDetail.value.id,
@@ -50,6 +50,7 @@ const addCart = () => {
       selected: false
     })
     ElMessage.success('添加购物车成功')
+    goodNum.value = 1
   } else {
     ElMessage.warning('规格不完整')
   }

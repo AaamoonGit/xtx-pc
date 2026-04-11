@@ -4,7 +4,8 @@ import { useUserStore } from './user'
 import {
   addCartRequest,
   getCartListRequest,
-  deleteCartRequest
+  deleteCartRequest,
+  mergeCartRequest
 } from '@/apis/cart'
 
 export const useCartStore = defineStore(
@@ -126,6 +127,21 @@ export const useCartStore = defineStore(
         .reduce((pre, item) => pre + item.price * item.count, 0)
     })
 
+    /**
+     * 退出登录时删除购物车信息
+     */
+    const removeCart = () => {
+      cartInfo.value = []
+    }
+
+    /**
+     * 合并购物车列表
+     */
+    const mergeCart = async (mergeArr) => {
+      const res = await mergeCartRequest(mergeArr)
+      console.log(res)
+    }
+
     return {
       cartInfo,
       addCart,
@@ -138,7 +154,9 @@ export const useCartStore = defineStore(
       checkedCount,
       checkedPrice,
       isAllChecked,
-      getCurrentCartList
+      getCurrentCartList,
+      removeCart,
+      mergeCart
     }
   },
   { persist: true }

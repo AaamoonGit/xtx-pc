@@ -3,9 +3,11 @@ import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 import { useRouter } from 'vue-router'
 const router = useRouter()
-
+import { useCartStore } from '@/stores/cart'
+const cartStore = useCartStore()
 const confirm = () => {
   userStore.clearUserInfo()
+  cartStore.removeCart()
   ElMessage.success('退出登录成功')
   router.push('/login')
 }

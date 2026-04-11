@@ -43,3 +43,15 @@ export const deleteCartRequest = (ids) => {
     }
   })
 }
+
+/**
+ * @description: 合并购物车
+ * @param {Array} list
+ */
+export const mergeCartRequest = (list) => {
+  return request({
+    url: '/member/cart/merge',
+    method: 'POST',
+    data: list
+  })
+}
