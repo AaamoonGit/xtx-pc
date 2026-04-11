@@ -5,3 +5,11 @@ export const getOrderListRequest = () => {
     url: '/member/order/pre'
   })
 }
+
+export const createOrderRequest = (data) => {
+  return request({
+    url: '/member/order',
+    method: 'POST',
+    data
+  })
+}
