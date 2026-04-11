@@ -1,26 +1,49 @@
-import { all } from 'axios'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { useUserStore } from './user'
+import {
+  addCartRequest,
+  getCartListRequest,
+  deleteCartRequest
+} from '@/apis/cart'
 
 export const useCartStore = defineStore(
   'cart',
   () => {
     const cartInfo = ref([])
+    const userStore = useUserStore()
+    const isToken = computed(() => userStore.userInfo.token)
+
+    /**
+     * 获取购物车列表
+     */
+    const getCurrentCartList = async () => {
+      if (isToken.value) {
+        const res = await getCartListRequest()
+        cartInfo.value = res.result
+      }
+    }
 
     /**
      * 添加购物车
      * action
      * @param {*} data
      */
-    const addCart = (data) => {
-      // cartInfo.value.push(data)
+    const addCart = async (data) => {
       console.log(data)
 
-      const item = cartInfo.value.find((item) => item.skuId === data.skuId)
-      if (item) {
-        item.count += data.count
+      if (isToken.value) {
+        // 上传服务器购物车
+        await addCartRequest(data)
+        getCurrentCartList()
       } else {
-        cartInfo.value.push(data)
+        // 本地购物车保存
+        const item = cartInfo.value.find((item) => item.skuId === data.skuId)
+        if (item) {
+          item.count += data.count
+        } else {
+          cartInfo.value.push(data)
+        }
       }
     }
 
@@ -28,8 +51,15 @@ export const useCartStore = defineStore(
      * 删除购物车商品
      * @param {*} skuId
      */
-    const delCart = (skuId) => {
-      cartInfo.value = cartInfo.value.filter((item) => item.skuId !== skuId)
+    const delCart = async (skuId) => {
+      if (isToken.value) {
+        // 删除服务器数据
+        // delCartRequest(skuId)
+        await deleteCartRequest([skuId])
+        getCurrentCartList()
+      } else {
+        cartInfo.value = cartInfo.value.filter((item) => item.skuId !== skuId)
+      }
     }
 
     /**
@@ -55,23 +85,29 @@ export const useCartStore = defineStore(
      */
     const CheckedChange = (skuId, selected) => {
       const target = cartInfo.value.find((item) => item.skuId === skuId)
-      console.log(target.skuId, selected)
+      // console.log(target.skuId, selected)
       target.selected = selected
     }
 
     /**
      * 单选控制全选
      */
-    const isAllChecked = computed(() =>
-      cartInfo.value.every((item) => item.selected === true)
-    )
+    const isAllChecked = computed(() => {
+      // return cartInfo.value.length === 0 ? false : cartInfo.value.every((item) => item.selected === true)
+      return (
+        cartInfo.value.length > 0 &&
+        cartInfo.value.every((item) => item.selected === true)
+      )
+    })
 
     /**
      * 全选控制单选
      */
     const CheckedAll = (value) => {
-      allChecked.value = !allChecked.value
-      cartInfo.value.forEach((item) => (item.selected = allChecked.value))
+      // console.log(value);
+
+      // allChecked.value = !allChecked.value
+      cartInfo.value.forEach((item) => (item.selected = value))
     }
 
     /**
@@ -101,7 +137,8 @@ export const useCartStore = defineStore(
       allChecked,
       checkedCount,
       checkedPrice,
-      isAllChecked
+      isAllChecked,
+      getCurrentCartList
     }
   },
   { persist: true }

@@ -14,7 +14,10 @@ request.interceptors.request.use(
   function (config) {
     const userStore = useUserStore()
     const token = userStore.userInfo.token
-    config.headers.Authorization = `Bearer ${token}`
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    // config.headers.Authorization = `Bearer ${token}`
     // 在发送请求之前做些什么
     return config
   },

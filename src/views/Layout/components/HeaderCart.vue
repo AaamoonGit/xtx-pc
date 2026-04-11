@@ -27,7 +27,7 @@ const cartStore = useCartStore()
             </div>
           </RouterLink>
           <i
-            class="iconfont icon-a-icon_close_bottomcard1"
+            class="iconfont icon-close"
             @click="cartStore.delCart(item.skuId)"
           ></i>
         </div>
@@ -85,7 +85,7 @@ const cartStore = useCartStore()
   }
 
   .layer {
-    opacity: 0;
+    opacity: 1;
     transition: all 0.4s 0.2s;
     transform: translateY(-200px) scale(1, 0);
     width: 400px;
@@ -172,6 +172,7 @@ const cartStore = useCartStore()
         opacity: 0;
         color: #666;
         transition: all 0.5s;
+        font-size: 16px;
       }
 
       &:hover {

@@ -38,8 +38,9 @@ const formRef = ref(null)
 // import {loginRequest} from "@/apis/login"
 import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
+const route = useRoute()
 const login = () => {
   // 表单整体校验
   formRef.value.validate(async (valid) => {
@@ -52,7 +53,9 @@ const login = () => {
       await userStore.getUserInfo({ account, password })
       ElMessage.success('登录成功')
 
-      router.replace('/')
+      // 如果有 redirect 参数，跳转回原页面，否则跳转到首页
+      const redirect = route.query.redirect || '/'
+      router.replace(redirect)
     } else {
       return ElMessage({ type: 'warning', message: '请完善信息' })
     }

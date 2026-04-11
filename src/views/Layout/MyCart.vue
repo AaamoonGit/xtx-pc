@@ -14,7 +14,7 @@ const cartStore = useCartStore()
               <th width="120">
                 <el-checkbox
                   :modelValue="cartStore.isAllChecked"
-                  @change="cartStore.CheckedAll"
+                  @change="(value) => cartStore.CheckedAll(value)"
                 />
               </th>
               <th width="400">商品信息</th>
