@@ -11,6 +11,9 @@ const getOrderDetail = async () => {
   const res = await getOrderDetailRequest(route.params.orderId)
   console.log(res)
   payInfo.value = res.result
+
+  startCount(payInfo.value.countdown)
+  // startCount(3)
 }
 
 onMounted(() => {
@@ -32,6 +35,10 @@ const backUrl = () => {
     router.push(`/payresult?payResult=${false}&orderId=${payInfo.value.id}`)
   }, 2000)
 }
+
+// 倒计时
+import { usePayCountDown } from '@/composables/useCountDown'
+const { startCount, formattedTime } = usePayCountDown()
 </script>
 
 <template>
@@ -42,7 +49,10 @@ const backUrl = () => {
         <span class="icon iconfont icon-queren2"></span>
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
-          <p>支付还剩 <span>24分30秒</span>, 超时后将取消订单</p>
+          <p>
+            支付还剩<span>{{ formattedTime }}</span
+            >, 超时后将取消订单
+          </p>
         </div>
         <div class="amount">
           <span>应付总额：</span>
