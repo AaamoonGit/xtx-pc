@@ -4,7 +4,7 @@ import axios from 'axios'
 // 当需要多个基地址时就创建多个实例
 const request = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
-  timeout: 5000
+  timeout: 20000
 })
 
 import { useUserStore } from '@/stores/user'
@@ -36,10 +36,10 @@ request.interceptors.response.use(
   },
   function (e) {
     // console.log(e.response.data.message);
-    ElMessage({ type: 'error', message: e.response.data.message })
+    ElMessage({ type: 'error', message: e.response?.data.message })
     // 超出 2xx 范围的状态码都会触发该函数。
-    console.log(e.response.status)
-    if (e.response.status === 401) {
+    console.log(e.response?.status)
+    if (e.response?.status === 401) {
       console.log('token失效了')
       const userStore = useUserStore()
       userStore.clearUserInfo()

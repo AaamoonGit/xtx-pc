@@ -9,8 +9,29 @@ const tabTypes = [
   { name: 'complete', label: '已完成' },
   { name: 'cancel', label: '已取消' }
 ]
+import { ref } from 'vue'
 // 订单列表
-const orderList = []
+const orderList = ref([])
+
+const params = ref({
+  orderState: 0,
+  page: 1,
+  pageSize: 2
+})
+
+import { getUserOrderRequest } from '@/apis/order'
+import { onMounted } from 'vue'
+
+const gtUserOrder = async () => {
+  const res = await getUserOrderRequest(params.value)
+  console.log(res)
+
+  orderList.value = res.result.items
+}
+
+onMounted(() => {
+  gtUserOrder()
+})
 </script>
 
 <template>
@@ -36,7 +57,7 @@ const orderList = []
               <!-- 未付款，倒计时时间还有 -->
               <span class="down-time" v-if="order.orderState === 1">
                 <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{ order.countdown }}</b>
+                <b>付款截止: {{ order.payLatestTime }}</b>
               </span>
             </div>
             <div class="body">
