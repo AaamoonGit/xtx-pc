@@ -10,6 +10,9 @@ const tabTypes = [
   { name: 'cancel', label: '已取消' }
 ]
 import { ref } from 'vue'
+const loading = ref(false)
+const isTabDisabled = ref(false)
+
 // 订单列表
 const orderList = ref([])
 
@@ -19,14 +22,19 @@ const params = ref({
   pageSize: 2
 })
 
+const orderInfo = ref({})
+
 import { getUserOrderRequest } from '@/apis/order'
 import { onMounted } from 'vue'
 
 const getUserOrder = async () => {
+  loading.value = true
   const res = await getUserOrderRequest(params.value)
   console.log(res)
-
+  loading.value = false
+  isTabDisabled.value = false
   orderList.value = res.result.items
+  orderInfo.value = res.result
 }
 
 onMounted(() => {
@@ -35,23 +43,42 @@ onMounted(() => {
 
 const handleClick = (type) => {
   console.log(type.index)
+  isTabDisabled.value = true
   params.value.orderState = type.index
+  params.value.page = 1
+  getUserOrder()
+}
 
+const handleCurrentChange = (page) => {
+  console.log(page)
+  params.value.page = page
+  getUserOrder()
+}
+const handleSizeChange = (size) => {
+  console.log(size)
+  params.value.pageSize = size
   getUserOrder()
 }
 </script>
 
 <template>
   <div class="order-container">
+    <!-- 订单状态 -->
     <el-tabs @tab-click="handleClick">
       <!-- tab切换 -->
       <el-tab-pane
+        :disabled="isTabDisabled"
         v-for="item in tabTypes"
         :key="item.name"
         :label="item.label"
       />
 
-      <div class="main-container">
+      <!-- 订单列表容器 -->
+      <div
+        class="main-container"
+        v-loading="loading"
+        element-loading-text="加班获取订单信息中..."
+      >
         <div class="holder-container" v-if="orderList.length === 0">
           <el-empty description="暂无订单数据" />
         </div>
@@ -88,7 +115,7 @@ const handleClick = (type) => {
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <p>{{ tabTypes[order.orderState].label }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
@@ -134,7 +161,18 @@ const handleClick = (type) => {
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <!-- <el-pagination background layout="prev, pager, next" /> -->
+            <el-pagination
+              v-model:current-page="params.page"
+              v-model:page-size="params.pageSize"
+              :page-sizes="[2, 4, 6, 8]"
+              :default-page-size="params.pageSize"
+              background
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="orderInfo.counts"
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
+            />
           </div>
         </div>
       </div>

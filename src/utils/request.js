@@ -4,7 +4,7 @@ import axios from 'axios'
 // 当需要多个基地址时就创建多个实例
 const request = axios.create({
   baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
-  timeout: 20000
+  timeout: 30000
 })
 
 import { useUserStore } from '@/stores/user'
