@@ -28,9 +28,9 @@ onMounted(() => {
       <div class="pay-result">
         <span
           v-if="payResult === 'true'"
-          class="iconfont icon-icon-test green"
+          class="iconfont icon-RectangleY green"
         ></span>
-        <span v-else class="iconfont icon-RectangleCopy red"></span>
+        <span v-else class="iconfont icon-RectangleN red"></span>
         <p class="tit">支付{{ payResult === 'true' ? '成功' : '失败' }}</p>
         <p class="tip" v-if="payResult === 'true'">
           我们将尽快为您发货，收货期间请保持手机畅通

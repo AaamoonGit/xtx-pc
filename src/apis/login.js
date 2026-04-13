@@ -7,3 +7,12 @@ export const loginRequest = (data) => {
     data
   })
 }
+
+export const getLikeListRequest = ({ limit = 4 }) => {
+  return request({
+    url: '/goods/relevant',
+    params: {
+      limit
+    }
+  })
+}

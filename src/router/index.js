@@ -20,34 +20,51 @@ const router = createRouter({
           component: HomeView
         },
         {
-          path: '/category/:id',
+          path: 'category/:id',
           component: () => import('@/views/Layout/CategoryView.vue')
         },
         {
-          path: '/category/sub/:id',
+          path: 'category/sub/:id',
           component: () =>
             import('@/views/Layout/components/SubCategoryComponents/index.vue')
         },
         {
-          path: '/category/detail/:id',
+          path: 'category/detail/:id',
           component: () =>
             import('@/views/Layout/components/GoodDetail/index.vue')
         },
         {
-          path: '/cart',
+          path: 'cart',
           component: () => import('@/views/Layout/MyCart.vue')
         },
         {
-          path: '/checkout',
+          path: 'checkout',
           component: () => import('@/views/Layout/CheckOut.vue')
         },
         {
-          path: '/pay/:orderId',
+          path: 'pay/:orderId',
           component: () => import('@/views/Layout/Pay.vue')
         },
         {
-          path: '/payresult',
+          path: 'payresult',
           component: () => import('@/views/Layout/PayResult.vue')
+        },
+        {
+          path: 'member',
+          redirect: '/member/personal',
+          component: () => import('@/views/Layout/Member.vue'),
+          children: [
+            {
+              path: 'personal',
+              component: () =>
+                import('@/views/Layout/components/MemberComponents/personalCenter.vue')
+            },
+            {
+              path: 'myorder',
+              component: () =>
+                import('@/views/Layout/components/MemberComponents/MyOrder.vue')
+            }
+          ]
         }
       ]
     },
