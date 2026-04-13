@@ -22,7 +22,7 @@ const params = ref({
 import { getUserOrderRequest } from '@/apis/order'
 import { onMounted } from 'vue'
 
-const gtUserOrder = async () => {
+const getUserOrder = async () => {
   const res = await getUserOrderRequest(params.value)
   console.log(res)
 
@@ -30,13 +30,20 @@ const gtUserOrder = async () => {
 }
 
 onMounted(() => {
-  gtUserOrder()
+  getUserOrder()
 })
+
+const handleClick = (type) => {
+  console.log(type.index)
+  params.value.orderState = type.index
+
+  getUserOrder()
+}
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-click="handleClick">
       <!-- tab切换 -->
       <el-tab-pane
         v-for="item in tabTypes"
